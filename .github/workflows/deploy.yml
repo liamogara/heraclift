@@ -1,0 +1,52 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: heraclift-liamogara
+  DOTNET_VERSION: "10.0.x"
+  NODE_VERSION: "22.x"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/heraclift-web/package-lock.json
+
+      - name: Build frontend
+        working-directory: frontend/heraclift-web
+        run: |
+          npm ci
+          npm run build
+
+      - name: Copy frontend build into backend wwwroot
+        run: |
+          rm -rf backend/Heraclift.Api/wwwroot
+          mkdir -p backend/Heraclift.Api/wwwroot
+          cp -r frontend/heraclift-web/dist/* backend/Heraclift.Api/wwwroot/
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Publish backend
+        working-directory: backend/Heraclift.Api
+        run: dotnet publish -c Release -o ./publish
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: backend/Heraclift.Api/publish

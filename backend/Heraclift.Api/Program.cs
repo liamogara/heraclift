@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseSqlite(builder.Configuration.GetConnectionString("Default") ?? "Data Source=heraclift.db"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
@@ -40,10 +40,10 @@ builder.Services.AddCors(opt => opt.AddPolicy("dev", p => p
 
 var app = builder.Build();
 
-// Create the SQLite database on first run.
+// Apply any pending EF Core migrations on startup.
 using (var scope = app.Services.CreateScope())
 {
-    scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.EnsureCreated();
+    scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate();
 }
 
 if (app.Environment.IsDevelopment())
@@ -54,6 +54,8 @@ if (app.Environment.IsDevelopment())
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
