@@ -2,10 +2,17 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api';
 import { Meander } from '../components/Layout';
-import type { RoutineWorkout, SetLog, WorkoutSession } from '../types';
+import type { ExerciseWeight, RoutineWorkout, SetLog, WorkoutSession } from '../types';
 
 // Client-side Epley estimate, shown inline while logging.
 const epley = (w: number, r: number) => (r <= 1 ? w : w * (1 + r / 30));
+
+// lb <-> kg, so a remembered weight prefills correctly even if the unit toggle differs.
+const convertWeight = (weight: number, fromUnit: string, toUnit: string) => {
+  if (fromUnit === toUnit) return weight;
+  const kg = fromUnit === 'kg' ? weight : weight / 2.20462;
+  return Math.round((toUnit === 'kg' ? kg : kg * 2.20462) * 10) / 10;
+};
 
 interface PlanExercise {
   name: string;
@@ -19,13 +26,17 @@ function ExerciseCard({
   session,
   onLogged,
   unit,
+  lastWeight,
 }: {
   exercise: PlanExercise;
   session: WorkoutSession;
   onLogged: (set: SetLog | null, removedId?: number) => void;
   unit: string;
+  lastWeight?: ExerciseWeight;
 }) {
-  const [weight, setWeight] = useState('');
+  const [weight, setWeight] = useState(
+    lastWeight ? String(convertWeight(lastWeight.weight, lastWeight.unit, unit)) : ''
+  );
   const [reps, setReps] = useState<number | string>(exercise?.targetReps ?? 8);
   const sets = session.sets.filter((s) => s.exerciseName === exercise.name);
   const done = sets.length >= exercise.targetSets;
@@ -104,13 +115,18 @@ export default function WorkoutPage() {
   const navigate = useNavigate();
   const [session, setSession] = useState<WorkoutSession | null>(null);
   const [plan, setPlan] = useState<RoutineWorkout | null>(null);
+  const [weights, setWeights] = useState<Record<string, ExerciseWeight>>({});
   const [loading, setLoading] = useState(true);
   const [unit, setUnit] = useState('lb');
 
   useEffect(() => {
     (async () => {
-      const active = await api.get<WorkoutSession | null>('/sessions/active');
+      const [active, lastWeights] = await Promise.all([
+        api.get<WorkoutSession | null>('/sessions/active'),
+        api.get<ExerciseWeight[]>('/exercises/weights'),
+      ]);
       setSession(active);
+      setWeights(Object.fromEntries(lastWeights.map((w) => [w.exerciseName, w])));
       if (active?.routineId) {
         const routine = await api.get<{ workouts: RoutineWorkout[] }>(`/routines/${active.routineId}`);
         setPlan(routine.workouts.find((w) => w.id === active.routineWorkoutId) ?? null);
@@ -186,7 +202,14 @@ export default function WorkoutPage() {
       </div>
 
       {exercises.map((ex) => (
-        <ExerciseCard key={ex.name} exercise={ex} session={session} onLogged={onLogged} unit={unit} />
+        <ExerciseCard
+          key={ex.name}
+          exercise={ex}
+          session={session}
+          onLogged={onLogged}
+          unit={unit}
+          lastWeight={weights[ex.name]}
+        />
       ))}
 
       <div className="row" style={{ marginTop: '1.25rem' }}>

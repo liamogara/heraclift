@@ -71,6 +71,28 @@ public class SetLog
     public int Reps { get; set; }
 }
 
+/// <summary>A logged run: a standard race distance or a custom distance/duration.</summary>
+public class RunLog
+{
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public string RaceType { get; set; } = "Custom";
+    public double DistanceKm { get; set; }
+    public int DurationSeconds { get; set; }
+    public DateOnly Date { get; set; }
+    public string Notes { get; set; } = "";
+}
+
+/// <summary>Last weight used per exercise, so future sets can be pre-filled.</summary>
+public class ExerciseWeight
+{
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public string ExerciseName { get; set; } = "";
+    public double Weight { get; set; }
+    public string Unit { get; set; } = "lb";
+}
+
 public class NutritionEntry
 {
     public int Id { get; set; }

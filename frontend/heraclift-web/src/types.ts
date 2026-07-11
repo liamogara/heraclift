@@ -41,3 +41,18 @@ export interface WorkoutSession {
   completedAt: string | null;
   sets: SetLog[];
 }
+
+export interface RunLog {
+  id: number;
+  raceType: string;
+  distanceKm: number;
+  durationSeconds: number;
+  date: string;
+  notes: string;
+}
+
+export interface ExerciseWeight {
+  exerciseName: string;
+  weight: number;
+  unit: string;
+}

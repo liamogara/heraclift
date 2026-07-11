@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import RoutinesPage from './pages/RoutinesPage';
 import RoutineBuilder from './pages/RoutineBuilder';
 import WorkoutPage from './pages/WorkoutPage';
+import RunsPage from './pages/RunsPage';
 import NutritionPage from './pages/NutritionPage';
 import CalculatorsPage from './pages/CalculatorsPage';
 
@@ -20,6 +21,7 @@ function Gate() {
         <Route path="routines/new" element={<RoutineBuilder />} />
         <Route path="routines/:id/edit" element={<RoutineBuilder />} />
         <Route path="workout" element={<WorkoutPage />} />
+        <Route path="runs" element={<RunsPage />} />
         <Route path="nutrition" element={<NutritionPage />} />
         <Route path="calculators" element={<CalculatorsPage />} />
       </Route>

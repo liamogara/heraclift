@@ -15,6 +15,8 @@ public class AppDbContext : DbContext
     public DbSet<SetLog> SetLogs => Set<SetLog>();
     public DbSet<NutritionEntry> NutritionEntries => Set<NutritionEntry>();
     public DbSet<NutritionGoal> NutritionGoals => Set<NutritionGoal>();
+    public DbSet<RunLog> RunLogs => Set<RunLog>();
+    public DbSet<ExerciseWeight> ExerciseWeights => Set<ExerciseWeight>();
 
     protected override void OnModelCreating(ModelBuilder mb)
     {
@@ -38,5 +40,9 @@ public class AppDbContext : DbContext
           .OnDelete(DeleteBehavior.Cascade);
 
         mb.Entity<NutritionEntry>().HasIndex(e => new { e.UserId, e.Date });
+
+        mb.Entity<RunLog>().HasIndex(r => new { r.UserId, r.Date });
+
+        mb.Entity<ExerciseWeight>().HasIndex(e => new { e.UserId, e.ExerciseName }).IsUnique();
     }
 }

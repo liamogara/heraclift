@@ -1,12 +1,13 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import HeraclesIcon from './HeraclesIcon';
-import { Landmark, CalendarClock, Dumbbell, UtensilsCrossed, Calculator, LogOut } from 'lucide-react';
+import { Landmark, CalendarClock, Dumbbell, Footprints, UtensilsCrossed, Calculator, LogOut } from 'lucide-react';
 
 const tabs = [
   { to: '/', label: 'Agora', end: true, icon: Landmark },
   { to: '/routines', label: 'Labors', icon: CalendarClock },
   { to: '/workout', label: 'Train', icon: Dumbbell },
+  { to: '/runs', label: 'Marathon', icon: Footprints },
   { to: '/nutrition', label: 'Feast', icon: UtensilsCrossed },
   { to: '/calculators', label: 'Oracle', icon: Calculator },
 ];

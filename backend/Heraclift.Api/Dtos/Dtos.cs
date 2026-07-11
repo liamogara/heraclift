@@ -24,6 +24,13 @@ public record SessionDto(int Id, int? RoutineId, int? RoutineWorkoutId, string W
 public record NutritionEntryRequest(string Date, string Name, double Calories, double Protein, double Carbs, double Fat);
 public record NutritionGoalRequest(double Calories, double Protein, double Carbs, double Fat);
 
+// Runs
+public record RunRequest(string RaceType, double? DistanceKm, int DurationSeconds, string Date, string? Notes);
+public record RunDto(int Id, string RaceType, double DistanceKm, int DurationSeconds, string Date, string Notes);
+
+// Exercise weights
+public record ExerciseWeightDto(string ExerciseName, double Weight, string Unit);
+
 // Calculators
 public record OneRepMaxRequest(double Weight, int Reps);
 public record OneRepMaxResponse(double Epley, double Brzycki, double Lombardi, double Average, Dictionary<int, double> PercentageTable);

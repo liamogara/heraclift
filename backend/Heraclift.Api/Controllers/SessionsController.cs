@@ -78,6 +78,25 @@ public class SessionsController : ControllerBase
             Reps = req.Reps
         };
         _db.SetLogs.Add(set);
+
+        // Prefill weight with the last used weight for this exercise. 
+        // Go off name so that new entries for the same exercise can automatically suggest the previous weight.
+        var lastWeight = await _db.ExerciseWeights
+            .FirstOrDefaultAsync(e => e.UserId == UserId && e.ExerciseName == req.ExerciseName);
+        if (lastWeight is null)
+            _db.ExerciseWeights.Add(new ExerciseWeight
+            {
+                UserId = UserId,
+                ExerciseName = req.ExerciseName,
+                Weight = req.Weight,
+                Unit = req.Unit
+            });
+        else
+        {
+            lastWeight.Weight = req.Weight;
+            lastWeight.Unit = req.Unit;
+        }
+
         await _db.SaveChangesAsync();
         return new SetLogDto(set.Id, set.ExerciseName, set.SetNumber, set.Weight, set.Unit, set.Reps);
     }
