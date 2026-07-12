@@ -28,7 +28,6 @@ export default function RoutinesPage() {
     <>
       <div className="spread" style={{ marginBottom: '1rem' }}>
         <div>
-          <p className="eyebrow">The Labors</p>
           <h1>Routines</h1>
         </div>
         <Link className="btn primary" to="/routines/new">

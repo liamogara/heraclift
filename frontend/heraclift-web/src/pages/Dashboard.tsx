@@ -39,7 +39,7 @@ export default function Dashboard() {
       routineWorkoutId: nextWorkout.id,
       workoutName: nextWorkout.name,
     });
-    navigate('/workout', { state: { session } });
+    navigate('/training', { state: { session } });
   };
 
   return (
@@ -55,7 +55,7 @@ export default function Dashboard() {
               <h2>{active.workoutName}</h2>
               <p className="muted">{active.sets.length} sets logged so far</p>
             </div>
-            <Link className="btn primary" to="/workout">
+            <Link className="btn primary" to="/training">
               Resume workout
             </Link>
           </div>
@@ -75,7 +75,7 @@ export default function Dashboard() {
             <button className="btn primary" onClick={startNext}>
               Begin workout
             </button>
-            <Link className="btn" to="/routines">
+            <Link className="btn" to="/training">
               View routine
             </Link>
           </div>

@@ -84,7 +84,7 @@ export default function RoutineBuilder() {
     try {
       if (id) await api.put(`/routines/${id}`, cleaned);
       else await api.post('/routines', cleaned);
-      navigate('/routines');
+      navigate('/training');
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -207,7 +207,7 @@ export default function RoutineBuilder() {
         <button className="btn primary" onClick={save} disabled={busy}>
           Save routine
         </button>
-        <button className="btn" onClick={() => navigate('/routines')}>
+        <button className="btn" onClick={() => navigate('/training')}>
           Cancel
         </button>
       </div>

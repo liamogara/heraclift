@@ -181,7 +181,6 @@ export default function WorkoutPage() {
     <>
       <div className="spread" style={{ marginBottom: '.5rem' }}>
         <div>
-          <p className="eyebrow">Training</p>
           <h1>{session.workoutName}</h1>
         </div>
         <div className="segmented" role="group" aria-label="Weight unit">

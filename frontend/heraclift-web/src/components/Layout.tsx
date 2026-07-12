@@ -1,13 +1,11 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import HeraclesIcon from './HeraclesIcon';
-import { Landmark, CalendarClock, Dumbbell, Footprints, UtensilsCrossed, Calculator, LogOut } from 'lucide-react';
+import { Landmark, Dumbbell, UtensilsCrossed, Calculator, LogOut } from 'lucide-react';
 
 const tabs = [
   { to: '/', label: 'Agora', end: true, icon: Landmark },
-  { to: '/routines', label: 'Labors', icon: CalendarClock },
-  { to: '/workout', label: 'Train', icon: Dumbbell },
-  { to: '/runs', label: 'Marathon', icon: Footprints },
+  { to: '/training', label: 'Labors', icon: Dumbbell },
   { to: '/nutrition', label: 'Feast', icon: UtensilsCrossed },
   { to: '/calculators', label: 'Oracle', icon: Calculator },
 ];
@@ -34,7 +32,7 @@ export default function Layout() {
       <header className="topbar">
         <div className="brand">
           <HeraclesIcon size={32} style={{ color: 'var(--gold)', verticalAlign: '-8px', marginRight: '.5rem' }} />
-          Hera<span className="accent">clift</span>
+          Herac<span className="accent">lift</span>
         </div>
         <nav className="topnav" aria-label="Primary">
           {tabs.map((t) => (

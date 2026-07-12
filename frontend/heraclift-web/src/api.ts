@@ -15,7 +15,7 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
     body: body === undefined ? undefined : JSON.stringify(body),
   });
 
-  if (res.status === 401) {
+  if (res.status === 401 && token) {
     clearToken();
     window.location.href = '/';
     throw new Error('Session expired. Sign in again.');

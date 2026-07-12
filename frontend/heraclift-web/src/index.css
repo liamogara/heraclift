@@ -70,7 +70,7 @@ button { font-family: var(--font-body); cursor: pointer; }
 
 .tabbar {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 20;
-  display: grid; grid-template-columns: repeat(5, 1fr);
+  display: grid; grid-template-columns: repeat(4, 1fr);
   background: var(--night-2); border-top: 1px solid var(--line);
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -90,7 +90,7 @@ button { font-family: var(--font-body); cursor: pointer; }
 .meander {
   height: 20px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='169 169 414 414'%3E%3Cpath d='m582.96 169.05v413.91h-338.61v-338.61h263.31v263.31h-188.01v-188.01h112.71v112.71h-37.414v-75.301h-37.887v112.71h112.71v-187.54h-187.54v262.84h262.84v-338.14h-338.14v376.02h-37.887v-413.91z' fill='%23c9a24b' fill-opacity='.55'/%3E%3C/svg%3E");
-  background-repeat: repeat-x;
+  background-repeat: round no-repeat;
   background-size: 20px 20px;
 }
 

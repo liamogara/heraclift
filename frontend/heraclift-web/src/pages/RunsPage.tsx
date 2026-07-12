@@ -98,7 +98,6 @@ export default function RunsPage() {
     <>
       <div className="spread" style={{ marginBottom: '1rem' }}>
         <div>
-          <p className="eyebrow">The Marathon</p>
           <h1>Runs</h1>
         </div>
         <div className="segmented" role="group" aria-label="Distance unit">

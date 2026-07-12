@@ -3,10 +3,8 @@ import { AuthProvider, useAuth } from './AuthContext';
 import Layout from './components/Layout';
 import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
-import RoutinesPage from './pages/RoutinesPage';
 import RoutineBuilder from './pages/RoutineBuilder';
-import WorkoutPage from './pages/WorkoutPage';
-import RunsPage from './pages/RunsPage';
+import TrainingPage from './pages/TrainingPage';
 import NutritionPage from './pages/NutritionPage';
 import CalculatorsPage from './pages/CalculatorsPage';
 
@@ -17,11 +15,9 @@ function Gate() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Dashboard />} />
-        <Route path="routines" element={<RoutinesPage />} />
+        <Route path="training" element={<TrainingPage />} />
         <Route path="routines/new" element={<RoutineBuilder />} />
         <Route path="routines/:id/edit" element={<RoutineBuilder />} />
-        <Route path="workout" element={<WorkoutPage />} />
-        <Route path="runs" element={<RunsPage />} />
         <Route path="nutrition" element={<NutritionPage />} />
         <Route path="calculators" element={<CalculatorsPage />} />
       </Route>

@@ -14,7 +14,7 @@ export default function AuthPage() {
 
   const set = (k: keyof typeof form) => (e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, [k]: e.target.value });
 
-  const submit: React.ComponentProps<'form'>['onSubmit'] = async (e) => {
+  const submit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setBusy(true);
@@ -33,7 +33,7 @@ export default function AuthPage() {
       <div className="auth-hero">
         <HeraclesIcon size={128} style={{ color: 'var(--gold)', display: 'block', margin: '0 auto .75rem' }} />
         <h1>
-          Hera<span className="accent">clift</span>
+          Herac<span className="accent">lift</span>
         </h1>
         <p className="tagline">Ascend through your labors</p>
       </div>
